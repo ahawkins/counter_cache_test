@@ -9,6 +9,14 @@ class PostTest < ActiveSupport::TestCase
     assert_equal 1, post.comments_count
   end
 
+  def tests_creating_a_comments_with_posts_increments_counter_using_push
+    post = Post.create! :title => 'foo'
+    post.comments << Comment.create!(:text => 'foo')
+    post.reload
+
+    assert_equal 1, post.comments_count
+  end
+
   def test_destroy_a_comment_decrements_counter
     post = Post.create :title => 'foo'
     comment = Comment.create! :text => 'foo', :post => post
